@@ -4,6 +4,8 @@
 #include <glm/fwd.hpp>
 #include <glm/vec4.hpp>
 
+#include "Material.h"
+
 class Shader
 {
 public:

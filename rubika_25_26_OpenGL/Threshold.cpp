@@ -7,7 +7,11 @@
 #include <glm/ext/matrix_transform.hpp>
 
 
+#include "Light.h"
+#include "Material.h"
 #include "Texture.h"
+
+class Material;
 
 namespace threshold
 {
@@ -19,6 +23,8 @@ namespace threshold
 	GLint newProg ;
 	Shader* shader ;
 	Texture* texture;
+	Material* material;
+	Light* light;
 	camera* cam;
 	unsigned int vertexShader;
 	
@@ -123,12 +129,21 @@ namespace threshold
 		vertexshaderId = glCreateShader(GL_VERTEX_SHADER);
 
 		shader = new Shader();
+		
 
 		glm::vec3 lightPos(0.0f, 0.0f, 0.0f); 
 		glm::vec3 lightColor(1.f, 1.0f, 0.0f); 
 		
 		shader->Init("BaseVertex.vs", "BaseFragment.fs");
 		shader->Use();
+		
+		
+		material = new Material(0.75f, 0.75f,0.75f, 0.75f);
+		material->Use(*shader);
+
+		//light = new Light(lightPos, lightColor, 1, lightColor, 1,  lightColor,1, lightColor); 
+		//light->Use(*shader);
+		
 		shader->SetFloat("time", glfwGetTime());
 		shader->SetVec3("lightPos", lightPos);
 		shader->SetVec3("lightColor", lightColor);
@@ -189,6 +204,8 @@ namespace threshold
 			shader->SetMatrix("projection", proj);
 			shader->Use();
 			texture->Use(*shader, 0);
+			material->Use(*shader);
+			//light->Use(*shader);
 			
 
 			model = glm::mat4(1.0f);

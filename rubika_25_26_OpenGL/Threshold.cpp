@@ -126,26 +126,16 @@ namespace threshold
 
 	void update()
 	{
-		// useless for now
-
-		glm::mat4 trans = glm::mat4(1.0f);
-		//trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-		glm::ortho(0.0f, 800.0f, 0.0f, 600.0f, 0.1f, 100.0f);
- 
-		
-		glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)1200/(float)1200, 0.1f, 75.0f);
-
+		glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)800/(float)600, 0.1f, 75.0f);
 
 		glm::mat4 view = glm::mat4(1.0f);
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-
 		
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(1.0f, 1.0f, 0.0f)); 
 		
-
-		
-		shader->SetMatrix("model", trans);
+		shader->Use();
+		shader->SetMatrix("model", model);
 		shader->SetMatrix("view", view);
 		shader->SetMatrix("projection", proj);
 	}
@@ -154,6 +144,8 @@ namespace threshold
 	{
 		shader->Use();
 		texture->Use(*shader, 0);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
 		glBindVertexArray(VertexArrayID);
 		//glDrawArrays(GL_TRIANGLES, 0, 4);
 		//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);

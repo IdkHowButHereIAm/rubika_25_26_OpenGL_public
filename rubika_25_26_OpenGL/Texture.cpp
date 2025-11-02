@@ -17,7 +17,7 @@ bool Texture::Init(const char* texturePath)
 {
     
     int width, height, nrChannels;
-    unsigned char *data = stbi_load(texturePath, &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load(texturePath, &width, &height, &nrChannels, 4);
     if (data)
     {
         unsigned int texture;
@@ -33,7 +33,7 @@ bool Texture::Init(const char* texturePath)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
         
         texture_ = texture;

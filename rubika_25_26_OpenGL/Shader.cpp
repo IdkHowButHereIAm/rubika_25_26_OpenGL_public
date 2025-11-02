@@ -71,9 +71,6 @@ bool Shader::Init(const char* vertexPath, const char* fragmentPath)
         printf("%s\n", info);
     }
 
-
-    
-
     ProgramID = glCreateProgram();
     glAttachShader(ProgramID, vertexshaderId);
     glAttachShader(ProgramID, shaderFragmentId);

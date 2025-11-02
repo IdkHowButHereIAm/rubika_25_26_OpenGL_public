@@ -48,14 +48,18 @@ int main()
 
     init();
 
+    float deltaTime = 0;
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
 
+        const double current_time = glfwGetTime();
+        deltaTime = static_cast<float>(current_time - deltaTime);
+
         update();
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         draw();
 
@@ -71,9 +75,23 @@ int main()
 void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
         glfwSetWindowShouldClose(window, true);
-    }
+    
+    // Move forward
+    if (glfwGetKey(window,  GLFW_KEY_UP ) == GLFW_PRESS){}
+        //position += direction * deltaTime * speed;
+            
+    // Move backward
+    if (glfwGetKey(window,  GLFW_KEY_DOWN ) == GLFW_PRESS){}
+        //positIon -= direction * deltaTime * speed;
+            
+    // Strafe right
+    if (glfwGetKey(window,  GLFW_KEY_RIGHT ) == GLFW_PRESS){}
+       // position += right * deltaTime * speed;
+           
+    // Strafe left
+    if (glfwGetKey(window,  GLFW_KEY_LEFT ) == GLFW_PRESS){}
+        //position -= right * deltaTime * speed;
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

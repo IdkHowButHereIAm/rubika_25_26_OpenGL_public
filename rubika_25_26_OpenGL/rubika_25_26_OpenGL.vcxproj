@@ -134,7 +134,9 @@
   <ItemGroup>
     <ClCompile Include="..\Dependencies\src\glad\glad.c" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Threshold.cpp" />
@@ -143,7 +145,9 @@
     <ClInclude Include="BaseFragment.fs" />
     <ClInclude Include="BaseVertex.vs" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="lightingShader.vs" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Threshold.h" />

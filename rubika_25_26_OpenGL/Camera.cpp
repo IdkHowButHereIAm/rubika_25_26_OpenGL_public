@@ -57,3 +57,8 @@ float camera::GetFOV() const
     return Fov;
 }
 
+glm::vec3 camera::GetPos() const
+{
+    return Position;
+}
+

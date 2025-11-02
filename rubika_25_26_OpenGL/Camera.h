@@ -23,6 +23,7 @@ class camera
         // use glm::lookAt
         glm::mat4 GetMatrix() const;
         float GetFOV() const;
+        glm::vec3 GetPos() const;
 
         // Input
         void ProcessKeyboard(Direction direction, float deltaTime);

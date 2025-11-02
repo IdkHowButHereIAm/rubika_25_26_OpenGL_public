@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
+#include <glm/ext/matrix_clip_space.hpp>
 //#define THRESOLD 0
 
 #ifndef THRESHOLD
@@ -14,6 +14,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+float deltaTime = 0.0f;
+bool firstMouse = true;
+float lastX, lastY = 0;
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -48,7 +51,7 @@ int main()
 
     init();
 
-    float deltaTime = 0;
+    deltaTime = 0;
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
@@ -56,7 +59,7 @@ int main()
         const double current_time = glfwGetTime();
         deltaTime = static_cast<float>(current_time - deltaTime);
 
-        update();
+        update(deltaTime);
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -77,21 +80,14 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     
-    // Move forward
-    if (glfwGetKey(window,  GLFW_KEY_UP ) == GLFW_PRESS){}
-        //position += direction * deltaTime * speed;
-            
-    // Move backward
-    if (glfwGetKey(window,  GLFW_KEY_DOWN ) == GLFW_PRESS){}
-        //positIon -= direction * deltaTime * speed;
-            
-    // Strafe right
-    if (glfwGetKey(window,  GLFW_KEY_RIGHT ) == GLFW_PRESS){}
-       // position += right * deltaTime * speed;
-           
-    // Strafe left
-    if (glfwGetKey(window,  GLFW_KEY_LEFT ) == GLFW_PRESS){}
-        //position -= right * deltaTime * speed;
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+       updateCamera(deltaTime, camera::Direction::Forward);
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        updateCamera(deltaTime, camera::Direction::Backward);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        updateCamera(deltaTime, camera::Direction::Left);
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        updateCamera(deltaTime, camera::Direction::Right);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -101,10 +97,26 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+    
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; 
+    lastX = xpos;
+    lastY = ypos;
 
+    float sensitivity = 0.1f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    updateCameraRot(xoffset, yoffset);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-
+    updateCameraZoom(yoffset);
 }

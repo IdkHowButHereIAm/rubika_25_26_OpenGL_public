@@ -143,6 +143,7 @@
     <ClInclude Include="BaseFragment.fs" />
     <ClInclude Include="BaseVertex.vs" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="lightingShader.vs" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Threshold.h" />

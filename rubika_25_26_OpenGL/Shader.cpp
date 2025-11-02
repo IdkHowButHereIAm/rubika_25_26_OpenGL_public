@@ -1,6 +1,4 @@
 #include "Shader.h"
-#include "Shader.h"
-#include "Shader.h"
 
 #include <fstream>
 #include <sstream>
@@ -101,4 +99,9 @@ void Shader::SetBool(const std::string& name, bool value) const
 void Shader::SetMatrix(const std::string& name, glm::mat4& value) const
 {
     glUniformMatrix4fv(glGetUniformLocation(ProgramID, name.c_str()), 1, 0, glm::value_ptr(value));
+}
+
+void Shader::SetVec3(const std::string& name, glm::vec3 value) const
+{
+    glUniform3f(glGetUniformLocation(ProgramID, name.c_str()),value[0], value[1], value[2]);
 }
